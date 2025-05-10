@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>クイズ一覧</h1>
+  <ul>
+    {% for q in quizzes %}
+    <li>
+      {{ q.question }} - {{ q.answer }}
+      <a href="/edit/{{ q.id }}">編集</a>
+      <a href="/delete/{{ q.id }}">削除</a>
+    </li>
+    {% endfor %}
+  </ul>
+  <a href="/create">新規作成</a>
+  <br>
+  <a href="/quiz">クイズに挑戦！</a>
+</body>
+</html>

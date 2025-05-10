@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>クイズに挑戦！</h1>
+  <p>{{ quiz.question }}</p>
+
+  {% if result is not none %}
+    <p>{{ "正解！" if result else "不正解..." }}</p>
+  {% endif %}
+
+  <form method="post">
+    <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
+    答え：<input type="text" name="user_answer">
+    <input type="submit" value="送信">
+  </form>
+  <a href="/quiz">別の問題に挑戦</a>
+  <a href="list">一覧へ</a>
+</body>
+</html>
