@@ -93,7 +93,7 @@ def quiz():
   cursor.execute("SELECT * FROM quiz")
   quizzes = cursor.fetchall()
   if not quizzes:
-    return "クイズがありません"
+    return "クイズがありません<br><a href='/create'>クイズを作成する</a>"
   quiz = random.choice(quizzes)
   return render_template('quiz.html', quiz=quiz)
 

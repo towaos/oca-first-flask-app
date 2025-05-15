@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script>
+    function confirmDelete(id, question) {
+      if (confirm(`「${question}」というクイズを削除してもよろしいですか？`)) {
+        window.location.href = `/delete/${id}`;
+      }
+    }
+  </script>
 </head>
 <body>
   <h1>クイズ一覧</h1>
@@ -12,7 +19,7 @@
     <li>
       {{ q.question }} - {{ q.answer }}
       <a href="/edit/{{ q.id }}">編集</a>
-      <a href="/delete/{{ q.id }}">削除</a>
+      <a href="javascript:void(0)" onclick="confirmDelete('{{ q.id }}', '{{ q.question }}')">削除</a>
     </li>
     {% endfor %}
   </ul>

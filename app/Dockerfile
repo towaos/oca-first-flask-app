@@ -1,5 +1,5 @@
-# FROM python:3.10
-FROM python:alpine
+FROM python:3.10
+# FROM python:alpine
 WORKDIR /var/www
 ENV TZ='Asia/Tokyo'
 COPY requirements.txt ./

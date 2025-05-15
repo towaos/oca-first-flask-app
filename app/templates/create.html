@@ -4,10 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script>
+    function confirmSave(event) {
+      const questionEl = document.querySelector('input[name="question"]');
+      const answerEl = document.querySelector('input[name="answer"]');
+      
+      if (!questionEl.value || !answerEl.value) {
+        alert('問題と答えを入力してください');
+        event.preventDefault();
+        return false;
+      }
+      
+      if (!confirm(`問題：「${questionEl.value}」\n答え:「${answerEl.value}」\n\n上記の内容で保存してもよろしいですか?`)) {
+        event.preventDefault();
+        return false;
+      }
+      return true;
+    }
+  </script>
 </head>
 <body>
-  <h1>クイズ作成</h1>
-  <form method="post">
+  <h1>クイズ{% if quiz %}編集{% else %}作成{% endif %}</h1>
+  <form method="post" onsubmit="return confirmSave(event)">
     問題：<input type="text" name="question" value="{{ quiz.question if quiz else '' }}"><br>
     答え：<input type="text" name="answer" value="{{ quiz.answer if quiz else '' }}"><br>
     <input type="submit" value="保存">
