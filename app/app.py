@@ -30,7 +30,7 @@ def create():
     conn.commit()
     cursor.close()
     conn.close()
-    return redirect('/list')
+    return redirect('/list?message=created')
   return render_template('create.html')
 
 # 一覧表示
@@ -42,7 +42,8 @@ def list_quizzes():
   quizzes = cursor.fetchall()
   cursor.close()
   conn.close()
-  return render_template('list.html', quizzes=quizzes)
+  message = request.args.get('message')
+  return render_template('list.html', quizzes=quizzes, message=message)
 
 # 編集
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -57,7 +58,7 @@ def edit(id):
     conn.commit()
     cursor.close()
     conn.close()
-    return redirect('/list')
+    return redirect('/list?message=edited')
 
   cursor.execute("SELECT id, question, answer FROM quiz WHERE id=%s", (id,))
   quiz = cursor.fetchone()
@@ -74,7 +75,7 @@ def delete(id):
   conn.commit()
   cursor.close()
   conn.close()
-  return redirect('/list')
+  return redirect('/list?message=deleted')
 
 # クイズ出題
 @app.route('/quiz', methods=['GET', 'POST'])
@@ -88,14 +89,14 @@ def quiz():
     cursor.execute("SELECT answer, question FROM quiz WHERE id=%s", (quiz_id,))
     quiz = cursor.fetchone()
     correct = quiz['answer'].strip() == user_answer
-    return render_template('quiz.html', quiz=quiz, result=correct)
+    return render_template('quiz.html', quiz=quiz, result=correct, correct_answer=quiz['answer'])
 
   cursor.execute("SELECT * FROM quiz")
   quizzes = cursor.fetchall()
   if not quizzes:
     return "クイズがありません<br><a href='/create'>クイズを作成する</a>"
   quiz = random.choice(quizzes)
-  return render_template('quiz.html', quiz=quiz)
+  return render_template('quiz.html', quiz=quiz, result=None, correct_answer=None)
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=3031)

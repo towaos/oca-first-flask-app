@@ -9,15 +9,21 @@
   <h1>クイズに挑戦！</h1>
   <p>{{ quiz.question }}</p>
 
-  {% if result is not none %}
-    <p>{{ "正解！" if result else "不正解..." }}</p>
+{% if result is not none %}
+  {% if result %}
+    <p style="color: green;">正解！</p>
+  {% else %}
+    <p style="color: red;">不正解... 正解は「{{ correct_answer }}」です。</p>
   {% endif %}
+{% endif %}
 
+{% if result is none %}
   <form method="post">
     <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
     答え：<input type="text" name="user_answer">
     <input type="submit" value="送信">
   </form>
+{% endif %}
   <a href="/quiz">別の問題に挑戦</a>
   <a href="list">一覧へ</a>
 </body>

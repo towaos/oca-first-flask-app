@@ -13,6 +13,13 @@
   </script>
 </head>
 <body>
+  {% if message == 'created' %}
+    <div class="notice">作成完了</div>
+  {% elif message == 'updated' %}
+    <div class="notice">編集完了</div>
+  {% elif message == 'deleted' %}
+    <div class="notice">削除完了</div>
+  {% endif %}
   <h1>クイズ一覧</h1>
   <ul>
     {% for q in quizzes %}
